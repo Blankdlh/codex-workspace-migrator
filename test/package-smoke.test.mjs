@@ -18,7 +18,7 @@ test("packed npm tarball exposes the CLI binary", () => {
 
   const packOutput = execFileSync(
     "npm",
-    ["pack", REPO_ROOT, "--pack-destination", packDir, "--cache", cacheDir, "--json"],
+    ["pack", REPO_ROOT, "--pack-destination", packDir, "--cache", cacheDir, "--json", "--dry-run=false"],
     { cwd: root, encoding: "utf8" },
   );
   const packed = JSON.parse(packOutput);
@@ -27,7 +27,18 @@ test("packed npm tarball exposes the CLI binary", () => {
 
   execFileSync(
     "npm",
-    ["install", "--prefix", installDir, "--cache", cacheDir, "--ignore-scripts", "--no-audit", "--fund=false", tarball],
+    [
+      "install",
+      "--prefix",
+      installDir,
+      "--cache",
+      cacheDir,
+      "--ignore-scripts",
+      "--no-audit",
+      "--fund=false",
+      "--dry-run=false",
+      tarball,
+    ],
     { cwd: root, encoding: "utf8" },
   );
 
