@@ -838,7 +838,12 @@ function createFixture({ duplicateProject = false, projectName = "My App" } = {}
 }
 
 function runCli(args, cwd) {
-  return spawnSync(process.execPath, [CLI, ...args], {
+  const effectiveArgs = [...args];
+  if (effectiveArgs[0] === "migrate" && effectiveArgs.includes("--execute") && !effectiveArgs.includes("--force-running-codex")) {
+    effectiveArgs.push("--force-running-codex");
+  }
+
+  return spawnSync(process.execPath, [CLI, ...effectiveArgs], {
     cwd,
     encoding: "utf8",
     env: { ...process.env },
