@@ -1,0 +1,31 @@
+{
+  "name": "codex-workspace-migrator",
+  "version": "0.1.0",
+  "description": "Safely migrate one local Codex project root while preserving historical sessions and project grouping.",
+  "type": "module",
+  "bin": {
+    "codex-workspace-migrator": "src/cli.mjs"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "pack:dry-run": "npm pack --dry-run --cache .npm-cache",
+    "publish:dry-run": "npm publish --dry-run --ignore-scripts --cache .npm-cache",
+    "check": "npm test && npm run pack:dry-run && npm run publish:dry-run",
+    "prepublishOnly": "npm run check"
+  },
+  "keywords": [
+    "codex",
+    "workspace",
+    "migration",
+    "cli"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
