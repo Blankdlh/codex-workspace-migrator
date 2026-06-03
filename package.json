@@ -6,6 +6,10 @@
   "bin": {
     "codex-workspace-migrator": "src/cli.mjs"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blankdlh/codex-workspace-migrator.git"
+  },
   "files": [
     "src",
     "README.md",
