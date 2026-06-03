@@ -2,54 +2,64 @@
 
 Safely move a local Codex project root to a new path while preserving project grouping, historical sessions, and local Codex metadata.
 
-## Install
-
-```bash
-npm install -g codex-workspace-migrator
-```
-
-Requirements:
+## Requirements
 
 - Node.js 20 or newer
 - `sqlite3` available on `PATH`
+
+## Usage
+
+Run without installing:
+
+```bash
+npx --yes codex-workspace-migrator@latest doctor
+npx --yes codex-workspace-migrator@latest list
+```
+
+Optional global install:
+
+```bash
+npm install -g codex-workspace-migrator
+codex-workspace-migrator doctor
+```
 
 ## Quick Start
 
 Quit Codex Desktop before running commands with `--execute`.
 
 ```bash
-codex-workspace-migrator doctor
-codex-workspace-migrator list
+npx --yes codex-workspace-migrator@latest doctor
+npx --yes codex-workspace-migrator@latest list
 ```
 
 Preview a migration:
 
 ```bash
-codex-workspace-migrator migrate --project "My App" --to ~/Workspaces/MyApp
+npx --yes codex-workspace-migrator@latest migrate --project "My App" --to ~/Workspaces/MyApp
 ```
 
 Apply it:
 
 ```bash
-codex-workspace-migrator migrate --project "My App" --to ~/Workspaces/MyApp --execute
+npx --yes codex-workspace-migrator@latest migrate --project "My App" --to ~/Workspaces/MyApp --execute
 ```
 
 Verify the result:
 
 ```bash
-codex-workspace-migrator verify --from "/old/project/root" --to ~/Workspaces/MyApp
+npx --yes codex-workspace-migrator@latest verify --from "/old/project/root" --to ~/Workspaces/MyApp
 ```
 
 Inspect rollback readiness:
 
 ```bash
-codex-workspace-migrator rollback
+npx --yes codex-workspace-migrator@latest rollback
 ```
 
 Apply rollback only if the dry-run plan is correct:
 
 ```bash
-codex-workspace-migrator rollback --execute
+npx --yes codex-workspace-migrator@latest rollback --execute
 ```
 
 Use `--from <path>` instead of `--project <name>` when multiple projects share the same basename.
@@ -62,6 +72,7 @@ Use this flow before migrating a real project.
 2. Pick the project name and a target path that does not already exist:
 
    ```bash
+   CWM="npx --yes codex-workspace-migrator@latest"
    PROJECT_NAME="My App"
    TARGET_PATH="$HOME/Workspaces/My App"
    ```
@@ -69,8 +80,8 @@ Use this flow before migrating a real project.
 3. Run read-only checks:
 
    ```bash
-   codex-workspace-migrator doctor
-   codex-workspace-migrator list
+   $CWM doctor
+   $CWM list
    ```
 
    Confirm that `sqlite3` is available, Codex Desktop is not running, and the project root is the one you intend to move.
@@ -78,13 +89,13 @@ Use this flow before migrating a real project.
 4. Run a dry-run:
 
    ```bash
-   codex-workspace-migrator migrate --project "$PROJECT_NAME" --to "$TARGET_PATH"
+   $CWM migrate --project "$PROJECT_NAME" --to "$TARGET_PATH"
    ```
 
    If the project name is ambiguous:
 
    ```bash
-   codex-workspace-migrator migrate --from "/old/project/root" --to "$TARGET_PATH"
+   $CWM migrate --from "/old/project/root" --to "$TARGET_PATH"
    ```
 
    Confirm that `from`, `to`, thread counts, metadata counts, and update flags look right. Do not continue if the dry-run resolves the wrong project.
@@ -92,13 +103,13 @@ Use this flow before migrating a real project.
 5. Execute only after Codex Desktop is closed:
 
    ```bash
-   codex-workspace-migrator migrate --project "$PROJECT_NAME" --to "$TARGET_PATH" --execute
+   $CWM migrate --project "$PROJECT_NAME" --to "$TARGET_PATH" --execute
    ```
 
 6. Verify:
 
    ```bash
-   codex-workspace-migrator verify --from "/old/project/root" --to "$TARGET_PATH"
+   $CWM verify --from "/old/project/root" --to "$TARGET_PATH"
    ```
 
    Confirm `ok: yes`, zero old-path residuals, and zero rollout/automation old-path rows.
@@ -108,7 +119,7 @@ Use this flow before migrating a real project.
 8. Inspect rollback readiness:
 
    ```bash
-   codex-workspace-migrator rollback
+   $CWM rollback
    ```
 
    Confirm the manifest path, backup count, and filesystem actions match the migration before running `rollback --execute`.
