@@ -2,6 +2,8 @@
 
 Use this skill when preparing, checking, or publishing this package to npm.
 
+Publishing is handled by GitHub Actions through npm Trusted Publishing. Do not publish with a local npm token unless the user explicitly asks for a manual fallback.
+
 ## Versioning
 
 Default to the normal release path:
@@ -64,24 +66,27 @@ The first ever publish can be handled manually with an explicit Git tag if the p
 
 9. Run `npm run prepublishOnly` again after the version commit/tag.
 
-10. Publish:
-
-   ```bash
-   npm publish --access public
-   ```
-
-   For prereleases, use the requested dist-tag, for example:
-
-   ```bash
-   npm publish --tag beta --access public
-   ```
-
-11. Push the release commit and tag:
+10. Push the release commit and tag:
 
    ```bash
    git push origin main
    git push origin --tags
    ```
+
+11. Confirm the `Publish npm package` GitHub Actions workflow completes.
+
+   The workflow is triggered by tags matching `v*`, runs `npm run check`, and publishes with:
+
+   ```bash
+   npm publish --access public --provenance
+   ```
+
+   It requires npm Trusted Publishing to be configured for:
+
+   - repository owner: `Blankdlh`
+   - repository name: `codex-workspace-migrator`
+   - workflow filename: `publish.yml`
+   - environment name: `npm-publish`
 
 12. After publish, run:
 
@@ -96,7 +101,7 @@ The first ever publish can be handled manually with an explicit Git tag if the p
 
 - Do not publish from a dirty worktree unless the user explicitly approves the exact dirty state.
 - Do not publish if `npm run prepublishOnly` fails.
-- Do not publish if npm dry-run reports package auto-corrections or unexpected package contents.
+- Do not push a release tag if npm dry-run reports package auto-corrections or unexpected package contents.
 - Do not publish if the target version is already present on npm.
 - Do not perform a real live migration as part of release unless the user provides the source and target project paths and explicitly asks for it.
-- Do not run `npm version`, `npm publish`, or `git push` without explicit user approval in the current turn.
+- Do not run `npm version` or `git push` without explicit user approval in the current turn.
