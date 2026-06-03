@@ -7,6 +7,12 @@ Safely move a local Codex project root to a new path while preserving project gr
 - Node.js 20 or newer
 - `sqlite3` available on `PATH`
 
+## Compatibility
+
+- This CLI has been tested with these local Codex Desktop builds:
+  - `148.0.7778.179`
+  - `149.0.7827.54`
+
 ## Usage
 
 Run without installing:
@@ -14,6 +20,15 @@ Run without installing:
 ```bash
 npx --yes codex-workspace-migrator@latest doctor
 npx --yes codex-workspace-migrator@latest list
+```
+
+Run from a local checkout when you want to inspect or modify the source first:
+
+```bash
+git clone git@github.com:Blankdlh/codex-workspace-migrator.git
+cd codex-workspace-migrator
+node src/cli.mjs doctor
+node src/cli.mjs list
 ```
 
 Optional global install:

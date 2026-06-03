@@ -20,8 +20,12 @@
   },
   "keywords": [
     "codex",
-    "workspace",
-    "migration",
+    "codex-desktop",
+    "openai-codex",
+    "workspace-migration",
+    "project-migration",
+    "codex-migration",
+    "nodejs",
     "cli"
   ],
   "license": "MIT",
