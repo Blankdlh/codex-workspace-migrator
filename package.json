@@ -1,6 +1,6 @@
 {
   "name": "codex-workspace-migrator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Safely migrate one local Codex project root while preserving historical sessions and project grouping.",
   "type": "module",
   "bin": {
